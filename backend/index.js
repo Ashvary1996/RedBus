@@ -10,8 +10,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routes
-app.use("/demo", (res) => res.send("App is Working"));
+app.use("/demo", (req, res) => res.send("App is Working"));
 app.use("/trip", require("./routes/tripRoute"));
+app.use("/ticket", require("./routes/ticketRoute"));
 
 app.listen(port, () => {
   console.log(`App is Running on PORT : ${port}`);

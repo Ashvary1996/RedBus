@@ -6,6 +6,10 @@ const tripSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  userName: {
+    type: String,
+    required: [true, "Please Enter Your Location / from"],
+  },
   from: {
     type: String,
     required: [true, "Please Enter Your Location / from"],
@@ -43,8 +47,9 @@ const tripSchema = new Schema({
   },
   bus_no: {
     type: Number,
+    require: [true, "Please include Bus Number"],
   },
-  animeties_list: [{ type: String }],
+
   busFare: { type: Number, required: [true, "Please write Bus Fare"] },
   busName: { type: String, required: [true, "Please mention Bus-Name"] },
 });

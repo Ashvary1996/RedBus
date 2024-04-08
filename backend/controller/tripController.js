@@ -1,4 +1,4 @@
-const Trip = require("../model/tripSchemal");
+const Trip = require("../model/tripSchema");
 
 /////////////
 
