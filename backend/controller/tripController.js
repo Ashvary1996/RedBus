@@ -46,7 +46,13 @@ const get50Trip = async (req, res) => {
 const getTripbyDate = async (req, res) => {
   try {
     const findByDate = req.body.findByDate;
+
     const trip = await Trip.find({ date: findByDate });
+
+    if (!trip) {
+      res.json({ status: false, msg: "trip by Date not found in database" });
+    }
+
     res.status(200).json({
       status: true,
       total: trip.length,

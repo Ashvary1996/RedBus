@@ -10,17 +10,24 @@ const newTicket = async (req, res) => {
       seatNumber,
       ticketType,
       totalPrice,
+      email,
+      number,
+      from,
+      to,
     } = req.body;
     // const totalPrice = Math.floor(Math.random() * max)  ;
 
     const newTicket = new Ticket({
-      tripId: tripId,
+      // tripId: tripId,
       passengerName: passengerName,
       passengerAge: passengerAge,
       passengerGender: passengerGender,
       seatNumber: seatNumber,
-      ticketType: ticketType,
       totalPrice: totalPrice,
+      email: email,
+      number: number,
+      from: from,
+      to: to,
     });
 
     await newTicket.save();
@@ -37,6 +44,7 @@ const newTicket = async (req, res) => {
     });
   }
 };
+
 const getTicket = async (req, res) => {
   try {
     const ticket = await Ticket.find({});
@@ -53,4 +61,5 @@ const getTicket = async (req, res) => {
     });
   }
 };
+
 module.exports = { newTicket, getTicket };

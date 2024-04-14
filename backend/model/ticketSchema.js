@@ -12,19 +12,29 @@ const ticketSchema = new Schema({
   },
   passengerGender: {
     type: String,
-    enum: ["Male", "Female", "Other"],
+    enum: ["male", "female", "other"],
     required: true,
   },
   seatNumber: [
     {
-      type: Number,
+      type: String,
       required: true,
     },
   ],
-  ticketType: {
+  email: {
     type: String,
-    enum: ["Standard", "Premium", "VIP"],
-    required: true,
+  },
+  number: {
+    type: String,
+    require: true,
+  },
+  from: {
+    type: String,
+    require: true,
+  },
+  to: {
+    type: String,
+    require: true,
   },
   totalPrice: {
     type: Number,

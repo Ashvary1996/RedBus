@@ -6,10 +6,7 @@ const tripSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  userName: {
-    type: String,
-    required: [true, "Please Enter Your Location / from"],
-  },
+  
   from: {
     type: String,
     required: [true, "Please Enter Your Location / from"],
@@ -24,19 +21,19 @@ const tripSchema = new Schema({
     required: [true, "Please Enter Bus Owner Id"],
   },
   startTime: {
-    type: Number,
+    type: String,
     required: [true, "Please Enter Start Time"],
   },
   endTime: {
-    type: Number,
+    type: String,
     required: [true, "Please Enter End Time"],
   },
   category: {
-    type: Number,
+    type: String,
     required: [true, "Please Enter Category"],
   },
   SeatBooked: {
-    type: [Number],
+    type: [String],
     validate: {
       validator: (seats) => {
         return seats.length > 0;
@@ -46,7 +43,7 @@ const tripSchema = new Schema({
     required: [true, "Please Book at Least One Seat"],
   },
   bus_no: {
-    type: Number,
+    type: String,
     require: [true, "Please include Bus Number"],
   },
 
