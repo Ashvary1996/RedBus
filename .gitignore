@@ -1,9 +1,9 @@
 .gitignore
  
-backend/node_modules
-frontend/node_modules
+client/node_modules
+server/node_modules
 
-backend/.env
-frontend/.env
+client/.env
+server/.env
 
 dummy.js

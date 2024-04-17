@@ -20,9 +20,9 @@ route.post("/create-checkout-session", async (req, res, next) => {
       },
 
       quantity: 1,
-    },
+    }, 
   ];
-
+ 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: lineItems,

@@ -211,12 +211,19 @@ const BusAndSeatSelectionPage = () => {
         {/* Filter  */}
         {/* /////////////////////////// Filter Div Started    ///////////////////////////////////// */}
 
-        <div id="selectionForm" name="leftColForFilter" className="w-2/6  p-2 ">
-          <div className="flex flex-row justify-between ">
+        <div
+          id="selectionForm"
+          name="leftColForFilter"
+          className="w-full md:w-2/5 lg:w-2/6 p-2"
+        >
+          <div className="flex flex-row justify-between">
             <h1>Filter</h1>
             <button onClick={clearFilters}>Clear All</button>
           </div>
-          <div name="selection-field">
+          <div
+            name="selection-field"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4"
+          >
             <div>
               <h2>Departure Time</h2>
               <input
@@ -395,38 +402,6 @@ const BusAndSeatSelectionPage = () => {
             </div>
 
             {/* -------------------- */}
-            {/* <div>
-              <h2>Window Seats Availability</h2>
-              <input
-                type="checkbox"
-                id="kolkata-drop"
-                name="window-seats"
-                className="cursor-pointer"
-              />
-              <label htmlFor="kolkata-drop" className="cursor-pointer">
-                1
-              </label>
-              <br />
-              <input
-                type="checkbox"
-                id="mumbai-drop"
-                name="window-seats"
-                className="cursor-pointer"
-              />
-              <label htmlFor="mumbai-drop" className="cursor-pointer">
-                2
-              </label>
-              <br />
-              <input
-                type="checkbox"
-                id="bangalore-drop"
-                name="window-seats"
-                className="cursor-pointer"
-              />
-              <label htmlFor="bangalore-drop" className="cursor-pointer">
-                4
-              </label>
-            </div> */}
 
             {/* -------------------- */}
             <div>
@@ -469,7 +444,7 @@ const BusAndSeatSelectionPage = () => {
         </div>
         {/* ///////////////////////////////   Filter Div Ended   ///////////////////////////////// */}
 
-        <div className=" border-2 border-red-500 p-2 w-full">
+        <div className="border-2   p-2 w-full md:w-3/5 lg:w-4/6">
           {/* <div name="dateNavigation">Date Appears here</div> */}
           {/* Buses Div Starts from here */}
           <div name="buses" id="buses" className="flex flex-col">
@@ -493,10 +468,17 @@ const BusAndSeatSelectionPage = () => {
               );
 
               return (
-                <div key={i} className="budSDiv">
+                <div key={i} className="budSDiv  p-4 md:p-8">
                   <div>
-                    <div className="flex justify-between border-4 p-4">
-                      <div className="border-4 p-4 mr-4 w-3/4">
+                    <div
+                      className="flex flex-col md:flex-row md:justify-between 
+                    
+                      p-4"
+                      style={{
+                        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                      }}
+                    >
+                      <div className="  p-4 mb-4 md:mb-0 md:w-3/4">
                         <h1 className="text-lg mb-2 font-bold">
                           {name}
                           <p className="inline text-sm text-gray-500 ml-2">
@@ -509,13 +491,12 @@ const BusAndSeatSelectionPage = () => {
                         </p>
                         <div className="flex mb-2">
                           <p className="mr-2">{departureTime},</p>
-                          {/* <p className="mr-2">{date}</p> */}
                           <p className="mr-2">----{journeyTime}----</p>
                           <p>
                             {arrivalTime}, {date}
                           </p>
                         </div>
-                        <div className="flex mb-2 text-sm text-blue-500 gap-2">
+                        <div className="md:flex md:flex-wrap flex mb-2 text-sm text-blue-500 gap-2">
                           {amenities.map((elem, i) => (
                             <div key={i}>
                               <p className="mr-2">{elem}</p>
@@ -523,9 +504,9 @@ const BusAndSeatSelectionPage = () => {
                           ))}
                         </div>
                       </div>
-                      <div className="   w-1/4">
+                      <div className="  flex flex-col items-center justify-center">
                         <p className="mb-2">Trip Cost</p>
-                        <h1 className="text-red-600 text-2xl mb-4">
+                        <h1 className="text-red-600 text-2xl font-semibold mb-4 ">
                           Rs {seatPrice}
                         </h1>
                         <button
@@ -533,22 +514,20 @@ const BusAndSeatSelectionPage = () => {
                           onClick={() => {
                             handelBusSelection(bus);
                             selectBus.busFare = seatPrice;
-                            // bus.toggle = !true;
                           }}
                         >
                           View Seat
                         </button>
                       </div>
                     </div>
-                    {/* Toggle DIv For Seat Selsection  */}
-
+                    {/* Toggle Div For Seat Selection */}
                     {toggle && (
                       <SeatSelection
                         selectBus={selectBus}
                         journeyTime={journeyTime}
                       />
                     )}
-                    {/* Toggle DIv Ended For Seat Selsection  */}
+                    {/* Toggle Div Ended For Seat Selection */}
                   </div>
                 </div>
               );

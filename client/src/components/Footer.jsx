@@ -14,13 +14,13 @@ function Footer() {
           <p>reserver.bus@reserve.com</p>
         </div>
 
-        <div className="footer-section w-full md:w-1/4 lg:w-1/6 px-4 mb-4">
+        <div className="footer-section w-full md:w-1/2 lg:w-1/6 px-4 mb-4">
           <h1 className="font-bold mb-2">About</h1>
           <p className="mb-2">About us</p>
           <p>Contact us</p>
         </div>
 
-        <div className="footer-section w-full md:w-1/4 lg:w-1/6 px-4 mb-4">
+        <div className="footer-section w-full md:w-1/2 lg:w-1/6 px-4 mb-4">
           <h1 className="font-bold mb-2">Useful Links</h1>
           <p className="mb-2">Careers</p>
           <p className="mb-2">FAQ</p>
@@ -29,7 +29,7 @@ function Footer() {
           <p>Blog</p>
         </div>
 
-        <div className="footer-section w-full md:w-1/4 lg:w-1/6 px-4 mb-4">
+        <div className="footer-section w-full md:w-1/2 lg:w-1/6 px-4 mb-4">
           <h1 className="font-bold mb-2">Follow us</h1>
           <p>Instagram</p>
           <p>Facebook</p>

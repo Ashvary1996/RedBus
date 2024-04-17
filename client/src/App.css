@@ -7,7 +7,7 @@
 .mainDiv {
   display: flex;
 
-  border: 2px solid red;
+  /* border: 2px solid red; */
   /* height: 58vh; */
 }
 .selectDiv {
@@ -53,7 +53,7 @@ select {
   border-radius: 5px;
   padding: 20px;
 
-  border: 2px solid red;
+  /* border: 2px solid red; */
   padding-right: 10px;
 }
 
@@ -98,7 +98,7 @@ select {
   color: #007bff;
 }
 #buses {
-  border: 2px solid green;
+  /* border: 2px solid green; */
 }
 .budSDiv {
   /* border: 2px solid green; */
