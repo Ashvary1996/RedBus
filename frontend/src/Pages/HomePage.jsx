@@ -36,7 +36,7 @@ const HomePage = () => {
 
   const handleSearch = () => {
     if (from && to && date) {
-      navigate("/buspage", { state: { from, to, date } });
+      navigate("/busAndSeatpage", { state: { from, to, date } });
     }
   };
 

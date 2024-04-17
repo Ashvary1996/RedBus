@@ -4,41 +4,41 @@ const Schema = mongoose.Schema;
 const ticketSchema = new Schema({
   passengerName: {
     type: String,
-    required: true,
+    required: [true, "Passenger name is required."],
   },
   passengerAge: {
     type: Number,
-    required: true,
+    required: [true, "Passenger age is required."],
   },
   passengerGender: {
     type: String,
     enum: ["male", "female", "other"],
-    required: true,
-  },
+    required: [true, "Passenger gender is required and must be 'male', 'female', or 'other'."],
+   },
   seatNumber: [
     {
       type: String,
-      required: true,
-    },
+      required: [true, "Seat number is required."],
+ },
   ],
   email: {
     type: String,
   },
   number: {
     type: String,
-    require: true,
+    required: [true, "Number is required."],
   },
   from: {
     type: String,
-    require: true,
+    required: [true, "From destination is required."],
   },
   to: {
     type: String,
-    require: true,
+    required: [true, "To destination is required."], 
   },
   totalPrice: {
     type: Number,
-    required: true,
+    required: [true, "Total price is required."],
   },
   bookingDate: {
     type: Date,
@@ -48,10 +48,3 @@ const ticketSchema = new Schema({
 
 const Ticket = mongoose.model("tickets", ticketSchema);
 module.exports = Ticket;
-
-// tripId: {
-// type:
-// Schema.Types.ObjectId ,
-//   ref: "Trip",
-//   required: true,
-// },

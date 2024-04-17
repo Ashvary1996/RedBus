@@ -1,12 +1,46 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-function Payment() {
+function PaymentSuccess() {
   const location = useLocation();
-  const data = location.state;
-  const passenger = data.passenger;
-  const busData = data.pData;
+  const data = location.state || [];
+  const passenger = data.passenger || [];
+  const busData = data.pData || [];
+  const [fullData,setFullData]=useState({})
+  // console.log("data", data);
+  const searchParams = new URLSearchParams(location.search);
+  const paymentId = searchParams.get("paymentId");
+  const productName = searchParams.get("productName");
+  const [transactionId, setTransactionId] = useState(null);
+  // const busDetails = JSON.parse(sessionStorage.getItem("busDetails"));
+  // const passengerDetails = JSON.parse(
+  //   sessionStorage.getItem("passengerDetails")
+  // );
 
+  // console.log("Bus Details:", busDetails);
+  // console.log("Passenger Details:", passengerDetails);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get("id");
+
+    axios
+      .post("http://localhost:5000/api/retrieve-payment-intent", {
+        paymentIntent: sessionId,
+      })
+      .then((res) => {
+        const transactionId = res.data.transactionId;
+        setTransactionId(transactionId);
+        console.log("Transaction ID:", transactionId);
+        console.log("res.data", res.data.fuLLdata);
+        setFullData( res.data.fuLLdata)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+console.log("fullData",fullData);
   return (
     <div className="container mt-4 mb-4 w-4/5 mx-auto px-2 py-4 bg-white rounded-lg shadow-md">
       {/* Header */}
@@ -28,23 +62,34 @@ function Payment() {
           <table className="w-full">
             <tbody>
               <tr>
-                <td className="font-semibold">Ticket ID: </td>
+                <td className="font-semibold">Ticket ID : </td>
                 <td>{passenger.ticket_id}</td>
               </tr>
               <tr>
-                <td className="font-semibold">Payment ID:</td>
-                <td>22</td>
+                <td className="font-semibold">Payment ID : </td>
+                <td>{transactionId}</td>
+                
               </tr>
               <tr>
-                <td className="font-semibold">Passenger Details:</td>
+                <td className="font-semibold">Bus Name : </td>
+                <td>{productName}</td>
+              </tr>
+              <tr>
+                <td className="font-semibold">Passenger Details : </td>
                 <td>
-                  {passenger.name}, {passenger.gender.toUpperCase().slice(0, 1)}
+                  {passenger.name},
+                  {passenger.gender &&
+                    passenger.gender.toUpperCase().slice(0, 1)}
                   , {passenger.age}yrs
                 </td>
               </tr>
               <tr>
-                <td className="font-semibold">Contact Details:</td>
-                <td>22123123</td>
+                <td className="font-semibold">Seat Booked : </td>
+                <td> demo</td>
+              </tr>
+              <tr>
+                <td className="font-semibold">Contact Details : </td>
+                <td>demo</td>
               </tr>
             </tbody>
           </table>
@@ -79,11 +124,12 @@ function Payment() {
           </div>
           <div className="flex items-center">
             <ul className="flex space-x-4">
-              {busData.amenities.map((amenity, index) => (
-                <li key={index} className="text-blue-500">
-                  {amenity}
-                </li>
-              ))}
+              {busData.amenities &&
+                busData.amenities.map((amenity, index) => (
+                  <li key={index} className="text-blue-500">
+                    {amenity}
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
@@ -92,4 +138,4 @@ function Payment() {
   );
 }
 
-export default Payment;
+export default PaymentSuccess;

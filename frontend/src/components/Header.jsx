@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Header = () => {
   return (
     <div className="nav bg-white shadow-md flex justify-between items-center px-5 py-3 font-semibold">
       <ul className="nav1 flex">
@@ -28,4 +28,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;
