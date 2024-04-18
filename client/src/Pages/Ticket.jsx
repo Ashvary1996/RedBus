@@ -9,16 +9,21 @@ function Ticket() {
   const fetchTicketData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_HOST_URL}/ticket/getTicket`
+        `${process.env.REACT_APP_HOST_URL}/ticket/getTicket`,
+        {
+          params: {
+            paymentId: localStorage.getItem("transactionId"),
+          },
+        }
       );
-      setTicketData(response.data.ticket[response.data.ticket.length - 1]);
+      setTicketData(response.data.ticket[0]);
+      console.log(response.data);
     } catch (error) {
-      setError("Error fetching ticket data");
+      setError("Error fetching ticket data: " + error.message);
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchTicketData();
   }, []);
@@ -75,10 +80,18 @@ function Ticket() {
               <span className="font-semibold">Total Price:</span>{" "}
               {ticketData.totalPrice}
             </p>
+            <p className="mb-2">
+              <span className="font-semibold">Bus Name:</span>{" "}
+              {ticketData.busName}
+            </p>
+            <p className="mb-2">
+              <span className="font-semibold">Bus Number:</span>{" "}
+              {ticketData.busNumber}
+            </p>
           </div>
         </div>
       ) : (
-        <p>No ticket data available</p>
+        <p>No ticket data available : Please Book a trip </p>
       )}
     </div>
   );

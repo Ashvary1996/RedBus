@@ -1,5 +1,6 @@
 import React from "react";
 
+
 function PaymentCancel() {
   return (
     <div>
@@ -8,5 +9,5 @@ function PaymentCancel() {
     </div>
   );
 }
- 
+
 export default PaymentCancel;

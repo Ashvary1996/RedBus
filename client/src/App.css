@@ -103,17 +103,47 @@ select {
 .budSDiv {
   /* border: 2px solid green; */
 }
-.seatSelectionDiv {
+
+/* .seatSelectionDiv {
   margin: auto;
   background: gray;
   align-items: center;
   justify-content: center;
-}
+  display: flex;
+  flex-wrap: wrap;
+} */
 .pForm input,
 select {
   border: 1px solid rgba(128, 128, 128, 0.58);
   border-radius: 5px;
   text-align: center;
+}
+.seatSelectionDiv {
+  /* border: 2px solid rgb(0, 255, 85); */
+  display: flex;
+
+  flex-wrap: wrap;
+  justify-content: space-between;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 10px;
+}
+.seatBtnDIV {
+  /* border: 2px solid rgb(255, 230, 0); */
+  display: flex;
+  padding-top: 10px;
+  /* flex-wrap: wrap; */
+
+  width: 70%;
+}
+.seatREsultDiv {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  margin: auto;
+  /* padding-left: 5px; */
+  font-size: small;
+  text-align: center;
+  width: 30%;
+  border-radius: 10px;
+  padding: 10px;
 }
 /* ///////responsivness  */
 
@@ -134,5 +164,26 @@ select {
     display: flex;
     flex-wrap: wrap;
     font-size: smaller;
+  }
+}
+@media screen and (min-width: 0px) and (max-width: 1000px) {
+  .seatSelectionDiv {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .seatBtnDIV {
+    width: 100%;
+    padding: 2px;
+  }
+
+  .seatREsultDiv {
+    width: 100%;
+  }
+  .singleSeat {
+    width: 20px;
+    font-size: small;
+    height: fit-content;
+   
   }
 }

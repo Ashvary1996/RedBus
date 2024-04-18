@@ -23,7 +23,7 @@ function PassengerDetail() {
     totalSeats,
   } = selectBus;
   const [data, setData] = useState({});
- 
+
   const [passenger, setPassengerDetail] = useState({
     ticket_id: "",
     name: "",
@@ -45,59 +45,62 @@ function PassengerDetail() {
     }));
   };
 
-  const createTicket = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_HOST_URL}/ticket/newTicket`,
-        {
-          passengerName: passenger.name,
-          passengerAge: passenger.age,
-          passengerGender: passenger.gender,
-          seatNumber: selectedSeats,
-          email: passenger.email,
-          totalPrice: totalPrice,
-          number: passenger.mobileNumber,
-          from: from,
-          to: to,
-          date: date,
-        }
-      );
-      if (response.data.success !== false) {
-        passenger.ticket_id = response.data.Ticket._id;
-        console.log("Ticket created successfully:", response.data.Ticket._id);
-      } else {
-        console.error("Failed to create ticket");
-      }
-    } catch (error) {
-      console.error("Error creating ticket:", error);
-    }
-  };
+  // const createTicket = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_HOST_URL}/ticket/newTicket`,
+  //       {
+  //         passengerName: passenger.name,
+  //         passengerAge: passenger.age,
+  //         passengerGender: passenger.gender,
+  //         seatNumber: selectedSeats,
+  //         email: passenger.email,
+  //         totalPrice: totalPrice,
+  //         number: passenger.mobileNumber,
+  //         from: from,
+  //         to: to,
+  //         date: date,
+  //       }
+  //     );
+  //     if (response.data.success !== false) {
+  //       passenger.ticket_id = response.data.Ticket._id;
+  //       console.log("Ticket created successfully:", response.data.Ticket._id);
+  //     } else {
+  //       console.error("Failed to create ticket");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating ticket:", error);
+  //   }
+  // };
 
-  const createTrip = async () => {
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_HOST_URL}/trip/newtrip`, {
-        from,
-        to,
-        busOwnerId: busOwnerID,
-        startTime: departureTime,
-        endTime: arrivalTime,
-        category,
-        SeatBooked: [],
-        bus_no: busNumber,
-        animeties_list: animeties_list,
-        busFare: seatPrice,
-        busName: name,
-      });
-      if (response.data.success !== false) {
-        passenger.ticket_id = response.data.success;
-        console.log("Trip created successfully:", response.data.tripDetail);
-      } else {
-        console.error("Failed to create trip");
-      }
-    } catch (error) {
-      console.error("Error creating trip:", error);
-    }
-  };
+  // const createTrip = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_HOST_URL}/trip/newtrip`,
+  //       {
+  //         from,
+  //         to,
+  //         busOwnerId: busOwnerID,
+  //         startTime: departureTime,
+  //         endTime: arrivalTime,
+  //         category,
+  //         SeatBooked: [],
+  //         bus_no: busNumber,
+  //         animeties_list: animeties_list,
+  //         busFare: seatPrice,
+  //         busName: name,
+  //       }
+  //     );
+  //     if (response.data.success !== false) {
+  //       passenger.ticket_id = response.data.success;
+  //       console.log("Trip created successfully:", response.data.tripDetail);
+  //     } else {
+  //       console.error("Failed to create trip");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating trip:", error);
+  //   }
+  // };
 
   const handelPaymentFn = async () => {
     const stripe = await loadStripe(process.env.REACT_APP_STRIP_KEY);
@@ -119,31 +122,26 @@ function PassengerDetail() {
           body: JSON.stringify(body),
         }
       );
+
       console.log("Response:", response);
+
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
       const session = await response.json();
+
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
       });
 
-      if (!result.error) {
-        await createTicket();
-        await createTrip();
-        console.log("Ticket and trip saved successfully.");
-        setPassengerDetail({
-          ticket_id: "",
-          name: "",
-          gender: "",
-          age: "",
-          email: "",
-          mobileNumber: "",
-          from: from,
-          to: from,
-        });
-
-        console.log("result", result);
-      } else {
-        console.error("Error redirecting to checkout:", result.error);
+      if (result.error) {
+        throw new Error(
+          `Error redirecting to checkout: ${result.error.message}`
+        );
       }
+
+      console.log("Payment successful.");
     } catch (error) {
       console.error("Error:", error);
     }

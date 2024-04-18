@@ -207,7 +207,7 @@ const BusAndSeatSelectionPage = () => {
   // console.log("selectBus", selectBus);
   return (
     <div className="busPageSelection ">
-      <div className="mainDiv sm:flex sm:flex-row border-2 border-red-900 ">
+      <div className="mainDiv sm:flex sm:flex-row  ">
         {/* Filter  */}
         {/* /////////////////////////// Filter Div Started    ///////////////////////////////////// */}
 

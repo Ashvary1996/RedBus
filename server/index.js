@@ -9,9 +9,10 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cors({ origin: process.env.ALLOWED_ORIGIN }));
+app.use(cors({ origin: process.env.HOST_URL }));
 
 // Routes
+
 app.use("/demo", (req, res) => res.send("App is Working"));
 app.use("/trip", require("./routes/tripRoute"));
 app.use("/ticket", require("./routes/ticketRoute"));

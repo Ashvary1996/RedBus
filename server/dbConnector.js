@@ -5,7 +5,7 @@ const connectToDB = () => {
     .connect(process.env.MONGO_URI)
     .then(() => {
       console.log("Connected to Database Successfully");
-      console.log(mongoose.modelNames());
+      // console.log(mongoose.modelNames());
     })
     .catch((err) => console.log(err));
 };

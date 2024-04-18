@@ -7,8 +7,13 @@ function PaymentSuccess() {
   const data = location.state || {};
   const passenger = data.passenger || {};
   // const busData = data.pData || {};
+  //   Ticket ID:	66215685cb747ff2b570d063
+  //   Payment ID:	pi_3P6ydvSBRlmSf9LE0TXi7ELL
   const [fullData, setFullData] = useState({});
   const [transactionId, setTransactionId] = useState(null);
+  const [ticketId, setTicketId] = useState(null);
+  console.log("ticketId", ticketId);
+  console.log(fullData);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -27,6 +32,96 @@ function PaymentSuccess() {
         console.log(err);
       });
   }, [location]);
+  const createTicket = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_HOST_URL}/ticket/newTicket`,
+        {
+          passengerName: fullData.passengerDetails.name,
+          passengerAge: fullData.passengerDetails.age,
+          passengerGender: fullData.passengerDetails.gender,
+          seatNumber: fullData.data.seatBooked,
+          email: fullData.passengerDetails.email,
+          totalPrice: fullData.data.totalPrice,
+          number: fullData.passengerDetails.mobileNumber,
+          from: fullData.data.from,
+          to: fullData.data.to,
+          date: fullData.data.date,
+          paymentId: transactionId,
+          busName: fullData.data.name,
+          busNumber: fullData.data.busNumber,
+          totalPrice: fullData.data.totalPrice,
+        }
+      );
+      if (response.data.success !== false) {
+        // passenger.ticket_id = response.data._id;
+        setTicketId(response.data.Ticket._id);
+        console.log("Ticket created successfully:", response.data.Ticket._id);
+      } else {
+        console.error("Failed to create ticket");
+      }
+    } catch (error) {
+      console.error("Error creating ticket:", error);
+    }
+  };
+
+  const createTrip = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_HOST_URL}/trip/newtrip`,
+        {
+          from: fullData.data.from,
+          to: fullData.data.to,
+          busOwnerId: fullData.data.busOwnerID,
+          startTime: fullData.data.departureTime,
+          endTime: fullData.data.arrivalTime,
+          category: fullData.data.category,
+          SeatBooked: fullData.data.seatBooked,
+          animeties_list: fullData.data.animeties_list,
+          busFare: fullData.data.seatPrice,
+          busName: fullData.data.name,
+          busNumber: fullData.data.busNumber,
+          totalPrice: fullData.data.totalPrice,
+        }
+      );
+      if (response.data.success !== false) {
+        passenger.ticket_id = response.data.success;
+        console.log("Trip created successfully:", response.data.tripDetail);
+      } else {
+        console.error("Failed to create trip");
+      }
+    } catch (error) {
+      console.error("Error creating trip:", error);
+    }
+  };
+  const fetchTicketData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_HOST_URL}/ticket/getTicket`,
+        {
+          params: {
+            paymentId: transactionId,
+          },
+        }
+      );
+      setTicketId(response.data.ticket[0]._id);
+      console.log(response.data.ticket[0]._id);
+    } catch (error) {
+      console.log("Error fetching ticket data: " + error.message);
+    }
+  };
+
+  useEffect(() => {
+    const isTicketTripCreated = localStorage.getItem("transactionId");
+
+    if (transactionId && transactionId !== isTicketTripCreated) {
+      createTicket();
+      createTrip();
+      localStorage.setItem("transactionId", transactionId);
+    } else {
+      fetchTicketData();
+    }
+  }, [transactionId]);
   // console.log(fullData);
   return (
     <div className="container mt-4 mb-4 w-4/5 mx-auto px-2 py-4 bg-white rounded-lg shadow-md">
@@ -48,7 +143,7 @@ function PaymentSuccess() {
             <tbody>
               <tr>
                 <td className="font-semibold">Ticket ID:</td>
-                <td>{passenger.ticket_id}</td>
+                <td>{ticketId ? ticketId : ""}</td>
               </tr>
               <tr>
                 <td className="font-semibold">Payment ID:</td>

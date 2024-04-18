@@ -44,6 +44,9 @@ const ticketSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  paymentId: { type: String, required: [true, "paymentId Required"] },
+  busName: { type: String, required: [true, "busName Required"] },
+  busNumber: { type: String, required: [true, "busNumber Required"] },
 });
 
 const Ticket = mongoose.model("tickets", ticketSchema);

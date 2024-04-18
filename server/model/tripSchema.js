@@ -6,7 +6,7 @@ const tripSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  
+
   from: {
     type: String,
     required: [true, "Please Enter Your Location / from"],
@@ -49,6 +49,7 @@ const tripSchema = new Schema({
 
   busFare: { type: Number, required: [true, "Please write Bus Fare"] },
   busName: { type: String, required: [true, "Please mention Bus-Name"] },
+ 
 });
 
 const Trip = mongoose.model("trips", tripSchema);

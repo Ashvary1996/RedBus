@@ -20,27 +20,22 @@ route.post("/create-checkout-session", async (req, res, next) => {
       },
 
       quantity: 1,
-    }, 
+    },
   ];
- 
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url:
-      "http://localhost:3000/paymentSuccess?id={CHECKOUT_SESSION_ID}",
-    cancel_url: "http://localhost:3000/paymentCancel",
+    success_url: `${process.env.HOST_URL}/paymentSuccess?id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.HOST_URL}/paymentCancel`,
     billing_address_collection: "required",
     // shipping_address_collection: {
     //   allowed_countries: ["IN"],
     // },
   });
-  // fuLLdata.push({
-  //   data: data,
-  //   passengerDetails: passengerDetails,
-  //   sessionId: session.id,
-  // });
-  
+   
+
   fuLLdata[session.id] = {
     data: data,
     passengerDetails: passengerDetails,
@@ -76,5 +71,5 @@ route.post("/retrieve-payment-intent", async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
- 
+
 module.exports = route;

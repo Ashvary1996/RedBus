@@ -9,11 +9,15 @@ const newTicket = async (req, res) => {
       passengerGender,
       seatNumber,
       ticketType,
-      totalPrice,
       email,
       number,
       from,
       to,
+      paymentId,
+      busName ,
+      busNumber ,
+      totalPrice,
+      
     } = req.body;
     // const totalPrice = Math.floor(Math.random() * max)  ;
 
@@ -28,6 +32,9 @@ const newTicket = async (req, res) => {
       number: number,
       from: from,
       to: to,
+      paymentId: paymentId,
+      busName:busName,
+      busNumber:busNumber,
     });
 
     await newTicket.save();
@@ -47,10 +54,10 @@ const newTicket = async (req, res) => {
 
 const getTicket = async (req, res) => {
   try {
-    const ticket = await Ticket.find({});
+    const paymentId = req.query.paymentId;
+    const ticket = await Ticket.find({ paymentId: paymentId });
     res.status(200).json({
       success: true,
-      total: ticket.length,
       ticket: ticket,
     });
   } catch (error) {

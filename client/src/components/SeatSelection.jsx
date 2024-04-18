@@ -1,37 +1,37 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Seat from "./Seat";
 
 const SeatSelection = ({ selectBus, journeyTime }) => {
   const navigate = useNavigate();
-
   const totalSeats = selectBus.totalSeats;
-  // const busCategory = selectBus.category;
   const [selectedSeats, setSelectedSeats] = useState([]);
 
-  // Sleeper                52 seats
-  // Semi-Sleeper (2+1)     49seats
-  // A/C Seater (2+2)       52 seats
-  // Non A/C Seater (3+2)   51 seats
-
   const handleSeatClick = (seatNumber) => {
-    // Checking if the seat is already selected
     const seatIndex = selectedSeats.indexOf(seatNumber);
     if (seatIndex === -1) {
-      // if seat is not selected, adding to the selectedSeats array
       setSelectedSeats([...selectedSeats, seatNumber]);
     } else {
-      // if seat is already selected, remove it from the selectedSeats array
       const updatedSeats = [...selectedSeats];
       updatedSeats.splice(seatIndex, 1);
       setSelectedSeats(updatedSeats);
       selectBus.seatBooked = [...selectedSeats];
     }
   };
-  //   console.log("selectedBus_Ki_Book_Walle_Seat", selectBus.seatBooked);
-  //   console.log("totalSeats", totalSeats);
-  //   selectBus.seatPrice = selectBus.seatPrice * selectedSeats.length;
-  // console.log("selectedSeats", selectBus);
+
+  const Seat = ({ number, isSelected }) => {
+    const seatColor = isSelected
+      ? "bg-green-500 text-white hover:bg-green-400 "
+      : "bg-gray-200 hover:bg-green-400 hover:text-white";
+
+    return (
+      <button
+        className={`singleSeat w-8 h-7 mr-1 mb-1  rounded-lg border border-gray-300 ${seatColor}`}
+        onClick={() => handleSeatClick(number)}
+      >
+        {number}
+      </button>
+    );
+  };
 
   const renderSeats = () => {
     const seatRows = [];
@@ -46,19 +46,14 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
             key={seatNumber}
             number={seatNumber}
             isSelected={selectedSeats.includes(seatNumber)}
-            onSelect={handleSeatClick}
           />
         );
         seatNumber++;
       }
       seatRows.push(
-        <div className="mb-2   " key={seatNumber}>
-          <div className="flex flex-col mb border-2 border-red-500">
-            {rowSeats.slice(0, 3)}
-          </div>
-          <div className="flex flex-col  border-2 border-green-500 mt-20 ">
-            {rowSeats.slice(3)}
-          </div>
+        <div className="mb-4" key={seatNumber}>
+          <div className="   ">{rowSeats.slice(0, 3)}</div>
+          <div className="   ">{rowSeats.slice(3)}</div>
         </div>
       );
     }
@@ -67,52 +62,48 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
   };
 
   return (
-    <div className="container m-auto  p-5  ">
-      <h2 className="text-2xl font-semibold mb-4">Select your seats</h2>
-      <p className="mt-4">
+    <div className="seatSelectionMainDiv m-auto p-5 ">
+      <h2 className="text-center text-2xl font-semibold mb-4">
+        Select your seats
+      </h2>
+      <p className="mt-2 ml-8">
         Selected Seats:{" "}
         {selectedSeats.length > 0
           ? selectedSeats.sort((a, b) => a - b).join(", ")
           : "None"}
       </p>
-      <br />
-      {/* displaying  */}
-      <div className="flex justify-between p-5">
-        {/* /////////////// Div  booking seat coloums/selection////////////////// */}
 
-        <div className="flex w-3/4">{renderSeats()}</div>
-
-        {/* /////////////   Div End  booking seat coloums/selection//////////////////// */}
-        <div className="text-center w-1/4 border-2 p-4 ">
-          <h2>Boarding And Dropping</h2>
-          <p className="text-left mt-10 text-gray-500">from</p>
-          <div className="flex justify-between ">
-            <p>{selectBus.from}</p>
-            <p>{selectBus.departureTime}</p>
-          </div>
-          <div className="flex  justify-start p-16 text-left">
-            <div className="text-left justify-start transform rotate-90">
-              -------------------➤
-            </div>
-          </div>
-          <p className="text-left mt-10 text-gray-500  ">to</p>
-          <div className="flex justify-between">
-            <p>{selectBus.to}</p>
-            <p>{selectBus.arrivalTime}</p>
-          </div>
-          <div className="flex justify-between mt-10">
-            <p>Seat No: {selectedSeats.sort((a, b) => a - b).join(", ")}</p>
-          </div>
-          <div className="flex justify-between mt-10">
-            <p>Amount</p>
-            <p>INR {(selectBus.seatPrice * selectedSeats.length).toFixed(2)}</p>
+      {/* ///////////// */}
+      <div className="seatSelectionDiv    ">
+        <div className=" seatBtnDIV ">{renderSeats()}</div>
+        <div className="seatREsultDiv ">
+          <h2 className="mb-4 text-lg font-medium">Boarding And Dropping</h2>
+          <p className="text-gray-500">
+            From: {selectBus.from} - {selectBus.departureTime}
+          </p>
+          <div className="my-6 text-gray-500">-------------------➤</div>
+          <p className="text-gray-500">
+            To: {selectBus.to} - {selectBus.arrivalTime}
+          </p>
+          <div className="mt-6 p-2">
+            <p className="mb-2 mt-2 text-left">
+              Selected Seats: {selectedSeats.join(", ")}
+            </p>
+            <p className="font-medium ">
+              Amount: ₹ {selectBus.seatPrice * selectedSeats.length}
+            </p>
           </div>
         </div>
       </div>
-
-      <div className="m m-auto text-center">
+      {/* ///////////// */}
+      <div className="mx-auto text-center mt-4">
         <button
-          className="bg-green-400  text-white p-5 "
+          disabled={!selectedSeats.length}
+          className={`inline-block ${
+            !selectedSeats.length
+              ? "bg-green-200 cursor-not-allowed"
+              : "bg-green-400 hover:bg-green-500"
+          } focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 text-white px-8 py-4 rounded-lg transition duration-300 ease-in-out text-lg`}
           onClick={() =>
             navigate("/passengerDetail", {
               state: { selectBus, journeyTime, selectedSeats },
