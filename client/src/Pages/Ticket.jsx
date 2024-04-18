@@ -9,7 +9,7 @@ function Ticket() {
   const fetchTicketData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/ticket/getTicket"
+        `${process.env.REACT_APP_HOST_URL}/ticket/getTicket`
       );
       setTicketData(response.data.ticket[response.data.ticket.length - 1]);
     } catch (error) {

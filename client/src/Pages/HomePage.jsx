@@ -16,7 +16,7 @@ const HomePage = () => {
 
   const fetchCities = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/state/getCities");
+      const res = await axios.get(`${process.env.REACT_APP_HOST_URL}/state/getCities`);
       const cityAndState = res.data.data.flatMap((elem) =>
         elem.districts.map((district) => `${district}, ${elem.state}`)
       );

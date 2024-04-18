@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import SeatSelection from "../components/SeatSelection";
 
@@ -7,7 +7,7 @@ const BusAndSeatSelectionPage = () => {
   const location = useLocation();
   const searchData = location.state;
   const { from, to, date } = searchData;
-  const navigate = useNavigate();
+
   const [buses, setBuses] = useState([]);
   const [selectBus, setSelectedBus] = useState({
     seatBooked: [],
@@ -17,7 +17,7 @@ const BusAndSeatSelectionPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/state/getBuses")
+      .get(`${process.env.REACT_APP_HOST_URL}/state/getBuses`)
       .then((res) => {
         const data = res.data.data.map((bus) => ({
           ...bus,
@@ -31,8 +31,8 @@ const BusAndSeatSelectionPage = () => {
   }, []);
 
   const handelBusSelection = (bus) => {
-    console.log(bus);
-    bus.toggle == false ? (bus.toggle = true) : (bus.toggle = false);
+    // console.log(bus);
+    bus.toggle === false ? (bus.toggle = true) : (bus.toggle = false);
 
     setSelectedBus((prevSelectBus) => ({
       ...prevSelectBus,
@@ -78,7 +78,7 @@ const BusAndSeatSelectionPage = () => {
     const selectedFilters = [...checkedCheckboxes, ...checkedRadios].map(
       (input) => input.value
     );
-    console.log(selectedFilters);
+    // console.log(selectedFilters);
     let filteredBuses = buses;
 
     if (selectedFilters.length > 0) {
@@ -122,13 +122,13 @@ const BusAndSeatSelectionPage = () => {
             selectedFilter === "none_a/c_seater"
           ) {
             if (selectedFilter === "sleeper") {
-              return bus.category == "Sleeper";
+              return bus.category === "Sleeper";
             } else if (selectedFilter === "semi_sleeper") {
-              return bus.category == "Semi-Sleeper (2+1)";
+              return bus.category === "Semi-Sleeper (2+1)";
             } else if (selectedFilter === "a/c_seater") {
-              return bus.category == "A/C Seater (2+2)";
+              return bus.category === "A/C Seater (2+2)";
             } else if (selectedFilter === "none_a/c_seater") {
-              return bus.category == "Non A/C Seater (3+2)";
+              return bus.category === "Non A/C Seater (3+2)";
             }
           }
           // Filter by Bus Operator //////////////////
@@ -140,23 +140,23 @@ const BusAndSeatSelectionPage = () => {
           ) {
             if (selectedFilter === "ashok_leyland") {
               return (
-                bus.name == "Ashok Leyland - Skyline" ||
-                bus.name == "Ashok Leyland - Skyline Deluxe"
+                bus.name === "Ashok Leyland - Skyline" ||
+                bus.name === "Ashok Leyland - Skyline Deluxe"
               );
             } else if (selectedFilter === "mitshuba") {
-              return bus.name == "Mitsubishi Fuso - Yutong";
+              return bus.name === "Mitsubishi Fuso - Yutong";
             } else if (selectedFilter === "volvos") {
               return (
-                bus.name == "Volvo 9400 - Goldline" ||
-                bus.name == "Volvo B9R - Marco Polo" ||
-                bus.name == "Volvo B11R - Silverline" ||
-                bus.name == "Volvo B7R - Greenline" ||
-                bus.name == "Eicher Motors - Volvo"
+                bus.name === "Volvo 9400 - Goldline" ||
+                bus.name === "Volvo B9R - Marco Polo" ||
+                bus.name === "Volvo B11R - Silverline" ||
+                bus.name === "Volvo B7R - Greenline" ||
+                bus.name === "Eicher Motors - Volvo"
               );
             } else if (selectedFilter === "tata") {
               return (
-                bus.name == "Tata Motors - Marcopolo" ||
-                bus.name == "Tata Motors - Starbus Deluxe"
+                bus.name === "Tata Motors - Marcopolo" ||
+                bus.name === "Tata Motors - Starbus Deluxe"
               );
             }
           }
@@ -207,22 +207,23 @@ const BusAndSeatSelectionPage = () => {
   // console.log("selectBus", selectBus);
   return (
     <div className="busPageSelection ">
-      <div className="mainDiv ">
+      <div className="mainDiv sm:flex sm:flex-row border-2 border-red-900 ">
         {/* Filter  */}
         {/* /////////////////////////// Filter Div Started    ///////////////////////////////////// */}
 
         <div
           id="selectionForm"
           name="leftColForFilter"
-          className="w-full md:w-2/5 lg:w-2/6 p-2"
+          className="  md:w-2/5 lg:w-1/4 p-2  "
+          // className="  md:w-2/5 lg:w-2/6 p-2"
         >
           <div className="flex flex-row justify-between">
             <h1>Filter</h1>
             <button onClick={clearFilters}>Clear All</button>
           </div>
           <div
-            name="selection-field"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4"
+            name="filtersDiv selection-field"
+            className="filtersDiv grid grid-cols-1  md:grid-cols-2 lg:grid-cols-1 gap-4  "
           >
             <div>
               <h2>Departure Time</h2>
@@ -445,6 +446,7 @@ const BusAndSeatSelectionPage = () => {
         {/* ///////////////////////////////   Filter Div Ended   ///////////////////////////////// */}
 
         <div className="border-2   p-2 w-full md:w-3/5 lg:w-4/6">
+          {/* <div className="border-2   p-2 "> */}
           {/* <div name="dateNavigation">Date Appears here</div> */}
           {/* Buses Div Starts from here */}
           <div name="buses" id="buses" className="flex flex-col">
@@ -489,14 +491,14 @@ const BusAndSeatSelectionPage = () => {
                           {category} | {totalSeats} seats left |{" "}
                           {totalWindowSeatsAvailable} windows seats
                         </p>
-                        <div className="flex mb-2">
+                        <div className="flex mb-2 busJourneyTime">
                           <p className="mr-2">{departureTime},</p>
-                          <p className="mr-2">----{journeyTime}----</p>
+                          <p className="mr-2 ">----{journeyTime}----</p>
                           <p>
                             {arrivalTime}, {date}
                           </p>
                         </div>
-                        <div className="md:flex md:flex-wrap flex mb-2 text-sm text-blue-500 gap-2">
+                        <div className="busAmenities md:flex md:flex-wrap flex mb-2 text-sm text-blue-500 gap-2">
                           {amenities.map((elem, i) => (
                             <div key={i}>
                               <p className="mr-2">{elem}</p>

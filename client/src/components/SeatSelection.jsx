@@ -6,7 +6,7 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
   const navigate = useNavigate();
 
   const totalSeats = selectBus.totalSeats;
-  const busCategory = selectBus.category;
+  // const busCategory = selectBus.category;
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   // Sleeper                52 seats
@@ -31,7 +31,7 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
   //   console.log("selectedBus_Ki_Book_Walle_Seat", selectBus.seatBooked);
   //   console.log("totalSeats", totalSeats);
   //   selectBus.seatPrice = selectBus.seatPrice * selectedSeats.length;
-  console.log("selectedSeats", selectBus);
+  // console.log("selectedSeats", selectBus);
 
   const renderSeats = () => {
     const seatRows = [];

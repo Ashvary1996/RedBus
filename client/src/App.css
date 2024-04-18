@@ -5,7 +5,7 @@
   /* height: fit-content; */
 }
 .mainDiv {
-  display: flex;
+  /* display: flex; */
 
   /* border: 2px solid red; */
   /* height: 58vh; */
@@ -108,4 +108,31 @@ select {
   background: gray;
   align-items: center;
   justify-content: center;
+}
+.pForm input,
+select {
+  border: 1px solid rgba(128, 128, 128, 0.58);
+  border-radius: 5px;
+  text-align: center;
+}
+/* ///////responsivness  */
+
+@media screen and (min-width: 0px) and (max-width: 640px) {
+  .filtersDiv {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+  .filtersDiv input {
+    font-size: 12px;
+  }
+  .busAmenities {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .busJourneyTime {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: smaller;
+  }
 }

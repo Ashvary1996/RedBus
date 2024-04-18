@@ -1,12 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 
 function PaymentCancel() {
-  const location = useLocation();
-  const data = location.state || [];
-  const passenger = data.passenger || [];
-  const busData = data.pData || [];
-
   return (
     <div>
       <h1>Payment Failed</h1>
@@ -14,5 +8,5 @@ function PaymentCancel() {
     </div>
   );
 }
-
+ 
 export default PaymentCancel;

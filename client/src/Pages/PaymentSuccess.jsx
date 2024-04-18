@@ -6,7 +6,7 @@ function PaymentSuccess() {
   const location = useLocation();
   const data = location.state || {};
   const passenger = data.passenger || {};
-  const busData = data.pData || {};
+  // const busData = data.pData || {};
   const [fullData, setFullData] = useState({});
   const [transactionId, setTransactionId] = useState(null);
 
@@ -15,7 +15,7 @@ function PaymentSuccess() {
     const sessionId = searchParams.get("id");
 
     axios
-      .post("http://localhost:5000/api/retrieve-payment-intent", {
+      .post(`${process.env.REACT_APP_HOST_URL}/api/retrieve-payment-intent`, {
         paymentIntent: sessionId,
       })
       .then((res) => {
@@ -26,8 +26,8 @@ function PaymentSuccess() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  console.log(fullData);
+  }, [location]);
+  // console.log(fullData);
   return (
     <div className="container mt-4 mb-4 w-4/5 mx-auto px-2 py-4 bg-white rounded-lg shadow-md">
       <div className="flex items-center justify-center flex-col mb-4">

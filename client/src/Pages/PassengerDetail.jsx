@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 function PassengerDetail() {
-  const navigate = useNavigate();
   const location = useLocation();
   const { selectBus, journeyTime, selectedSeats } = location.state;
   const {
@@ -24,12 +23,7 @@ function PassengerDetail() {
     totalSeats,
   } = selectBus;
   const [data, setData] = useState({});
-  console.log(data);
-  // selectBus.seatBooked = [...selectedSeats];
-  // let totalPrice = selectBus.seatPrice * selectedSeats.length;
-  // selectBus.seatPrice = totalPrice;
-  // console.log(selectBus.seatPrice);
-  // console.log(selectedSeats);
+ 
   const [passenger, setPassengerDetail] = useState({
     ticket_id: "",
     name: "",
@@ -54,7 +48,7 @@ function PassengerDetail() {
   const createTicket = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/ticket/newTicket",
+        `${process.env.REACT_APP_HOST_URL}/ticket/newTicket`,
         {
           passengerName: passenger.name,
           passengerAge: passenger.age,
@@ -81,7 +75,7 @@ function PassengerDetail() {
 
   const createTrip = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/trip/newtrip", {
+      const response = await axios.post(`${process.env.REACT_APP_HOST_URL}/trip/newtrip`, {
         from,
         to,
         busOwnerId: busOwnerID,
@@ -118,7 +112,7 @@ function PassengerDetail() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/create-checkout-session",
+        `${process.env.REACT_APP_HOST_URL}/api/create-checkout-session`,
         {
           method: "POST",
           headers: headers,
@@ -145,8 +139,8 @@ function PassengerDetail() {
           from: from,
           to: from,
         });
-        
-        console.log("result",result);
+
+        console.log("result", result);
       } else {
         console.error("Error redirecting to checkout:", result.error);
       }
@@ -172,7 +166,7 @@ function PassengerDetail() {
       seatBooked: selectedSeats,
       totalPrice: totalPrice,
     });
-  }, [location.state]);
+  }, [from, journeyTime, selectBus, selectedSeats, totalPrice]);
 
   const isDisabled =
     !passenger.name ||
@@ -183,7 +177,13 @@ function PassengerDetail() {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div
+        className="bg-white shadow-lg rounded-lg overflow-hidden"
+        style={{
+          boxShadow:
+            "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
+        }}
+      >
         <div className="flex flex-col md:flex-row justify-between items-center px-6 py-4">
           <div className="w-full md:w-2/3 md:mr-4 mb-4 md:mb-0">
             <h1 className="text-lg font-bold mb-2">
@@ -251,13 +251,13 @@ function PassengerDetail() {
           </div>
         </div>
 
-        <div className="px-6 py-4 ">
+        <div className="px-6 py-4 mb-10">
           <h1 className="text-xl font-bold mb-4">Enter Traveller Details</h1>
           <div className="flex flex-col md:flex-row gap-4 mb-2 ml-2">
             <h3 className="mb-2 md:mb-0">Passenger : {selectedSeats.length}</h3>
             <h3 className="mb-2 md:mb-0">Seats : {selectedSeats.join(", ")}</h3>
           </div>
-          <form className="flex flex-wrap md:flex-row gap-4">
+          <form className="flex pForm flex-wrap md:flex-row gap-4">
             <input
               type="text"
               name="name"
