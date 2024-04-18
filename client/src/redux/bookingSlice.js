@@ -11,12 +11,14 @@ const initialState = {
 
 export const bookingSlice = createSlice({
   name: "seat-booking",
-  initialState, 
+  initialState,
   reducers: {
-  
+    increment: (state) => {
+      state.value += 1;
+    },
   },
 });
 
-export const { } = bookingSlice.actions;
+export const { increment } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

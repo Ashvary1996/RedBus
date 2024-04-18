@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
@@ -15,11 +14,8 @@ function PassengerDetail() {
     rating,
     totalWindowSeatsAvailable,
     arrivalTime,
-    busNumber,
-    busOwnerID,
     departureTime,
     seatPrice,
-    animeties_list,
     totalSeats,
   } = selectBus;
   const [data, setData] = useState({});

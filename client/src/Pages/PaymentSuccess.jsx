@@ -42,7 +42,6 @@ function PaymentSuccess() {
           passengerGender: fullData.passengerDetails.gender,
           seatNumber: fullData.data.seatBooked,
           email: fullData.passengerDetails.email,
-          totalPrice: fullData.data.totalPrice,
           number: fullData.passengerDetails.mobileNumber,
           from: fullData.data.from,
           to: fullData.data.to,
