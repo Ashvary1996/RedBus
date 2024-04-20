@@ -13,13 +13,16 @@ const ticketSchema = new Schema({
   passengerGender: {
     type: String,
     enum: ["male", "female", "other"],
-    required: [true, "Passenger gender is required and must be 'male', 'female', or 'other'."],
-   },
+    required: [
+      true,
+      "Passenger gender is required and must be 'male', 'female', or 'other'.",
+    ],
+  },
   seatNumber: [
     {
       type: String,
       required: [true, "Seat number is required."],
- },
+    },
   ],
   email: {
     type: String,
@@ -34,15 +37,15 @@ const ticketSchema = new Schema({
   },
   to: {
     type: String,
-    required: [true, "To destination is required."], 
+    required: [true, "To destination is required."],
   },
   totalPrice: {
     type: Number,
     required: [true, "Total price is required."],
   },
-  bookingDate: {
-    type: Date,
-    default: Date.now,
+  bookingDate: { 
+    type: String,
+    required: [true, "bookingDate is required."],
   },
   paymentId: { type: String, required: [true, "paymentId Required"] },
   busName: { type: String, required: [true, "busName Required"] },

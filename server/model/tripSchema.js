@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const tripSchema = new Schema({
-  date: {
-    type: Date,
-    default: Date.now,
+  tripDate: {
+    type: String,
+    required: [true, "Please Enter Trip Date"],
   },
 
   from: {
@@ -32,7 +32,7 @@ const tripSchema = new Schema({
     type: String,
     required: [true, "Please Enter Category"],
   },
-  SeatBooked: {
+  seatBooked: {
     type: [String],
     validate: {
       validator: (seats) => {
@@ -49,7 +49,6 @@ const tripSchema = new Schema({
 
   busFare: { type: Number, required: [true, "Please write Bus Fare"] },
   busName: { type: String, required: [true, "Please mention Bus-Name"] },
- 
 });
 
 const Trip = mongoose.model("trips", tripSchema);

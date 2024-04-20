@@ -1,28 +1,49 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SeatSelection = ({ selectBus, journeyTime }) => {
+  const { from, to } = selectBus;
+
   const navigate = useNavigate();
   const totalSeats = selectBus.totalSeats;
+  const [preBookedSeats, setPreBookedSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  console.log("preBookedSeats", preBookedSeats);
+  console.log("selectedSeats", selectedSeats);
 
   const handleSeatClick = (seatNumber) => {
-    const seatIndex = selectedSeats.indexOf(seatNumber);
-    if (seatIndex === -1) {
-      setSelectedSeats([...selectedSeats, seatNumber]);
-    } else {
-      const updatedSeats = [...selectedSeats];
-      updatedSeats.splice(seatIndex, 1);
-      setSelectedSeats(updatedSeats);
-      selectBus.seatBooked = [...selectedSeats];
+    // console.log(seatNumber);
+    if (preBookedSeats.includes(seatNumber)) {
+      return;
     }
+    // const seatIndex = selectedSeats.indexOf(seatNumber);
+    // if (seatIndex === -1) {
+    //   setSelectedSeats([...selectedSeats, seatNumber]);
+    // } else {
+    //   const updatedSeats = [...selectedSeats];
+    //   updatedSeats.splice(seatIndex, 1);
+    //   // setSelectedSeats(updatedSeats);
+    //   selectBus.seatBooked = [...selectedSeats];
+    // }
+
+    setSelectedSeats((prevSelectedSeats) => {
+      if (prevSelectedSeats.includes(seatNumber)) {
+        return prevSelectedSeats.filter((seat) => seat !== seatNumber);
+      } else {
+        return [...prevSelectedSeats, seatNumber];
+      }
+    });
   };
 
   const Seat = ({ number, isSelected }) => {
-    const seatColor = isSelected
+    let seatColor = isSelected
       ? "bg-green-500 text-white hover:bg-green-400 "
       : "bg-gray-200 hover:bg-green-400 hover:text-white";
-
+    if (preBookedSeats.includes(number)) { 
+      seatColor = "bg-red-500 text-white cursor-not-allowed";
+    }
     return (
       <button
         className={`singleSeat w-8 h-7 mr-1 mb-1  rounded-lg border border-gray-300 ${seatColor}`}
@@ -61,6 +82,25 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
     return seatRows;
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(selectBus.name);
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_HOST_URL}/trip/getTripbyQuery?from=${from}&=${to}&busName=${selectBus.name}`
+        );
+        console.log(res.data.trip_Detail[0]);
+        const seatBookedNumbers =
+          res.data.trip_Detail[0].seatBooked.map(Number);
+        setPreBookedSeats(seatBookedNumbers);
+        // setSelectedSeats(seatBookedNumbers);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData(); 
+  }, [from,to,selectBus.name]);
   return (
     <div className="seatSelectionMainDiv m-auto p-5 ">
       <h2 className="text-center text-2xl font-semibold mb-4">

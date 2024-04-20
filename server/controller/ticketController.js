@@ -17,6 +17,7 @@ const newTicket = async (req, res) => {
       busName,
       busNumber,
       totalPrice,
+      bookingDate
     } = req.body;
     // const totalPrice = Math.floor(Math.random() * max)  ;
 
@@ -34,6 +35,7 @@ const newTicket = async (req, res) => {
       paymentId: paymentId,
       busName: busName,
       busNumber: busNumber,
+      bookingDate:bookingDate
     });
 
     await newTicket.save();
