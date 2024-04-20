@@ -25,11 +25,11 @@ Welcome to the Red Bus Website project! This project is a web application for bo
 
 - **Payment Page**
   - Users can make payments securely.
-  - Payment methods supported: Credit/Debit Card, Net Banking, Wallets, etc.
+  - Payment methods supported: Credit/Debit Card.
 
 - **Ticket and Trip Creation**
   - After successful payment, the ticket is generated for the user.
-  - A new trip is created in the system with the selected bus, seat details, and passenger information.
+  - A new trip is initiated in the system when no existing trip with the same details is found. This includes the chosen bus, seat details, and passenger information.
 
 ## Technologies Used
 
@@ -67,14 +67,12 @@ Welcome to the Red Bus Website project! This project is a web application for bo
      npm install
      nodemon index.js
 
-
-
 ## Deployment
 
 - The frontend is deployed on [Netlify](https://red-bus-by-ashvary.netlify.app/) :https://red-bus-by-ashvary.netlify.app/
 - The backend is currently hosted at [https://redbus-eru5.onrender.com/](https://redbus-eru5.onrender.com/)
 
-To run/deploy the backend and frontend elsewhere, make sure to set up environment variables and adjust configurations accordingly.
+To run or deploy the backend and frontend , make sure to set up environment variables and adjust configurations accordingly.
 
 ## Contributing
 
