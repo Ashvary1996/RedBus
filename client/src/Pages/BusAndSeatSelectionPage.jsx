@@ -7,7 +7,7 @@ const BusAndSeatSelectionPage = () => {
   const location = useLocation();
   const searchData = location.state;
   const { from, to, date } = searchData;
-  console.log(from, to, date);
+  // console.log(from, to, date);
   const [buses, setBuses] = useState([]);
   const [selectBus, setSelectedBus] = useState({
     seatBooked: [],

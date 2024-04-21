@@ -10,8 +10,8 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
   const totalSeats = selectBus.totalSeats;
   const [preBookedSeats, setPreBookedSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
-  console.log("preBookedSeats", preBookedSeats);
-  console.log("selectedSeats", selectedSeats);
+  // console.log("preBookedSeats", preBookedSeats);
+  // console.log("selectedSeats", selectedSeats);
 
   const handleSeatClick = (seatNumber) => {
     // console.log(seatNumber);
@@ -84,12 +84,12 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(selectBus.name);
+      // console.log(selectBus.name);
       try {
         const res = await axios.get(
           `${process.env.REACT_APP_HOST_URL}/trip/getTripbyQuery?from=${from}&=${to}&busName=${selectBus.name}`
         );
-        console.log(res.data.trip_Detail[0]);
+        // console.log(res.data.trip_Detail[0]);
         const seatBookedNumbers =
           res.data.trip_Detail[0].seatBooked.map(Number);
         setPreBookedSeats(seatBookedNumbers);

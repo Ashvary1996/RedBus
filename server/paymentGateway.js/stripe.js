@@ -41,7 +41,7 @@ route.post("/create-checkout-session", async (req, res, next) => {
     passengerDetails: passengerDetails,
   };
 
-  console.log(req.body);
+  // console.log(req.body);
   res.json({
     id: session.id,
     data: data,

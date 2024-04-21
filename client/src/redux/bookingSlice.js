@@ -5,20 +5,38 @@ const initialState = {
   from: "",
   to: "",
   date: "",
-  status: "",
+  status: "comingFromRedux",
   error: null,
 };
 
 export const bookingSlice = createSlice({
-  name: "seat-booking",
+  name: "booking",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    setCities: (state, action) => {
+      // console.log("Updating cities with redux:", action.payload);
+      state.cities = action.payload;
+    },
+    setFrom: (state, action) => {
+      state.from = action.payload;
+    },
+    setTo: (state, action) => {
+      state.to = action.payload;
+      // console.log("state.to",state.to);
+    },
+    setDate: (state, action) => {
+      state.date = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload;
     },
   },
 });
 
-export const { increment } = bookingSlice.actions;
+export const { setCities, setFrom, setTo, setDate, setError, setStatus } =
+  bookingSlice.actions;
 
 export default bookingSlice.reducer;

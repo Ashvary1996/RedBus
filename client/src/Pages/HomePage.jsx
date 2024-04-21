@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import {
+  setCities,
+  setFrom,
+  setTo,
+  setDate,
+  setError,
+  setStatus,
+} from "../redux/bookingSlice";
 
 const HomePage = () => {
   const navigate = useNavigate();
-
-  const [cities, setCities] = useState([]);
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [date, setDate] = useState("");
+  const dispatch = useDispatch();
+  // const [cities, setCities] = useState([]);
+  // const [from, setFrom] = useState("");
+  // const [to, setTo] = useState("");
+  // const [date, setDate] = useState("");
+  const { cities, from, to, date } = useSelector((state) => state.booking);
 
   useEffect(() => {
     fetchCities();
@@ -16,22 +26,29 @@ const HomePage = () => {
 
   const fetchCities = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST_URL}/state/getCities`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_HOST_URL}/state/getCities`
+      );
       const cityAndState = res.data.data.flatMap((elem) =>
         elem.districts.map((district) => `${district}, ${elem.state}`)
       );
-      setCities(cityAndState.sort());
+      // console.log(cityAndState);
+      // setCities(cityAndState.sort());
+
+      dispatch(setCities(cityAndState.sort()));
     } catch (error) {
       console.error("Error fetching cities:", error.message);
+      dispatch(setError(error.message));
     }
   };
 
   const handleSearch = () => {
     if (from && to && date) {
+      dispatch(setStatus("loading"));
       navigate("/busAndSeatpage", { state: { from, to, date } });
     }
   };
-
+  // console.log("Cities in state:", cities);
   return (
     <div className="flex justify-center pt-10 min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 w-full md:w-3/4">
@@ -47,7 +64,7 @@ const HomePage = () => {
               id="fromLocation"
               name="fromLocation"
               value={from}
-              onChange={(e) => setFrom(e.target.value)}
+              onChange={(e) => dispatch(setFrom(e.target.value))}
               className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             >
               <option value="">Select City, And State</option>
@@ -67,7 +84,7 @@ const HomePage = () => {
               id="toLocation"
               name="toLocation"
               value={to}
-              onChange={(e) => setTo(e.target.value)}
+              onChange={(e) => dispatch(setTo(e.target.value))}
               className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             >
               <option value="">Select City, And State</option>
@@ -88,7 +105,7 @@ const HomePage = () => {
               id="dateInput"
               name="dateInput"
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e) => dispatch(setDate(e.target.value))}
               className="cursor-pointer w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             />
           </div>
