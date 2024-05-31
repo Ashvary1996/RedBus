@@ -4,12 +4,7 @@
   height: max-content;
   /* height: fit-content; */
 }
-.mainDiv {
-  /* display: flex; */
 
-  /* border: 2px solid red; */
-  /* height: 58vh; */
-}
 .selectDiv {
   margin: auto;
   display: flex;
@@ -124,7 +119,8 @@ select {
 
   flex-wrap: wrap;
   justify-content: space-between;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   padding: 10px;
 }
 .seatBtnDIV {
@@ -136,7 +132,8 @@ select {
   width: 70%;
 }
 .seatREsultDiv {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
   margin: auto;
   /* padding-left: 5px; */
   font-size: small;
@@ -165,6 +162,13 @@ select {
     flex-wrap: wrap;
     font-size: smaller;
   }
+  .pForm input,
+  select {
+    border: 1px solid rgba(128, 128, 128, 0.58);
+    border-radius: 5px;
+    text-align: center;
+    width: 90%;
+  }
 }
 @media screen and (min-width: 0px) and (max-width: 1000px) {
   .seatSelectionDiv {
@@ -184,6 +188,5 @@ select {
     width: 20px;
     font-size: small;
     height: fit-content;
-   
   }
 }

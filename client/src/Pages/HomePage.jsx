@@ -14,33 +14,28 @@ import {
 const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [cities, setCities] = useState([]);
-  // const [from, setFrom] = useState("");
-  // const [to, setTo] = useState("");
-  // const [date, setDate] = useState("");
   const { cities, from, to, date } = useSelector((state) => state.booking);
 
   useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_HOST_URL}/state/getCities`
+        );
+        const cityAndState = res.data.data.flatMap((elem) =>
+          elem.districts.map((district) => `${district}, ${elem.state}`)
+        );
+  
+        dispatch(setCities(cityAndState.sort()));
+      } catch (error) {
+        console.error("Error fetching cities:", error.message);
+        dispatch(setError(error.message));
+      }
+    };
     fetchCities();
-  }, []);
-
-  const fetchCities = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_HOST_URL}/state/getCities`
-      );
-      const cityAndState = res.data.data.flatMap((elem) =>
-        elem.districts.map((district) => `${district}, ${elem.state}`)
-      );
-      // console.log(cityAndState);
-      // setCities(cityAndState.sort());
-
-      dispatch(setCities(cityAndState.sort()));
-    } catch (error) {
-      console.error("Error fetching cities:", error.message);
-      dispatch(setError(error.message));
-    }
-  };
+  }, [dispatch]);
+ 
+ 
 
   const handleSearch = () => {
     if (from && to && date) {
@@ -48,11 +43,11 @@ const HomePage = () => {
       navigate("/busAndSeatpage", { state: { from, to, date } });
     }
   };
-  // console.log("Cities in state:", cities);
+
   return (
     <div className="flex justify-center pt-10 min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 w-full md:w-3/4">
-        <h1 className="text-4xl text-center mb-8 text-red-600 font-extrabold text-dark-emphasis ">
+        <h1 className="text-4xl text-center mb-8 text-red-600 font-extrabold">
           Book Your Trip
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -112,7 +107,7 @@ const HomePage = () => {
         </div>
 
         <button
-          className={`w-full mt-4 bg-orange-500 text-white font-medium rounded-lg py-3   ${
+          className={`w-full mt-4 bg-orange-500 text-white font-medium rounded-lg py-3 ${
             !from || !to || !date
               ? "opacity-50 cursor-not-allowed"
               : "hover:bg-orange-600"
@@ -149,7 +144,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="mt-10 mb-10 enjoy-section bg-red-600 text-white p-6 rounded-lg shadow-md flex flex-col   md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
+        <div className="mt-10 mb-10 bg-red-600 text-white p-6 rounded-lg shadow-md flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
           <h2 className="text-2xl font-bold mb-4">ENJOY THE APP!</h2>
           <ul className="mb-4">
             <li className="mb-2">Quick access</li>
@@ -159,13 +154,13 @@ const HomePage = () => {
             <p className="text-xl font-bold">4.6</p>
             <p>50M+ downloads</p>
           </div>
-          <div className="download flex flex-col items-center md:flex-row  flex-wrap gap-6 ">
+          <div className="download flex flex-col items-center md:flex-row flex-wrap gap-6">
             <div className="store mb-4 md:mb-0">
               <p className="text-lg font-bold">Play Store</p>
               <p className="text-xl font-bold">4.6</p>
               <p>50M+ downloads</p>
             </div>
-            <div className="store mb-4 md:mb-0 flex items-center ">
+            <div className="store mb-4 md:mb-0 flex items-center">
               <p className="text-lg font-bold">App Store</p>
               <p className="hidden md:block">Scan to download</p>
               <img

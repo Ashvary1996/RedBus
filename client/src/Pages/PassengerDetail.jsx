@@ -41,64 +41,13 @@ function PassengerDetail() {
     }));
   };
 
-  // const createTicket = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${process.env.REACT_APP_HOST_URL}/ticket/newTicket`,
-  //       {
-  //         passengerName: passenger.name,
-  //         passengerAge: passenger.age,
-  //         passengerGender: passenger.gender,
-  //         seatNumber: selectedSeats,
-  //         email: passenger.email,
-  //         totalPrice: totalPrice,
-  //         number: passenger.mobileNumber,
-  //         from: from,
-  //         to: to,
-  //         date: date,
-  //       }
-  //     );
-  //     if (response.data.success !== false) {
-  //       passenger.ticket_id = response.data.Ticket._id;
-  //       console.log("Ticket created successfully:", response.data.Ticket._id);
-  //     } else {
-  //       console.error("Failed to create ticket");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating ticket:", error);
-  //   }
-  // };
-
-  // const createTrip = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${process.env.REACT_APP_HOST_URL}/trip/newtrip`,
-  //       {
-  //         from,
-  //         to,
-  //         busOwnerId: busOwnerID,
-  //         startTime: departureTime,
-  //         endTime: arrivalTime,
-  //         category,
-  //         SeatBooked: [],
-  //         bus_no: busNumber,
-  //         animeties_list: animeties_list,
-  //         busFare: seatPrice,
-  //         busName: name,
-  //       }
-  //     );
-  //     if (response.data.success !== false) {
-  //       passenger.ticket_id = response.data.success;
-  //       console.log("Trip created successfully:", response.data.tripDetail);
-  //     } else {
-  //       console.error("Failed to create trip");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating trip:", error);
-  //   }
-  // };
-
   const handelPaymentFn = async () => {
+    if (isDisabled) {
+      alert(
+        "Please fill out all the required fields before proceeding to payment."
+      );
+      return;
+    }
     const stripe = await loadStripe(process.env.REACT_APP_STRIP_KEY);
     const body = {
       passengerDetails: passenger,
@@ -192,18 +141,18 @@ function PassengerDetail() {
               <p className="mr-2">{departureTime},</p>
               <p className="mr-2">{journeyTime}</p>
               <div>
-                {arrivalTime},{" "}
+                {arrivalTime},
                 <p className="inline-block text-gray-600">{date}</p>
               </div>
             </div>
             <div className="flex justify-between mb-2 text-sm text-blue-600 gap-2">
               <div>
                 <p className="mr-2">{from}</p>
-                <p className="mr-2">( Mahavir Bus Station )</p>
+                <p className="mr-2 sm:text-sm">( Mahavir Bus Station )</p>
               </div>
               <div>
                 <p className="mr-2">{to}</p>
-                <p className="mr-2">( South Civil Line )</p>
+                <p className="mr-2 sm:text-sm">( South Civil Line )</p>
               </div>
             </div>
           </div>
@@ -215,7 +164,6 @@ function PassengerDetail() {
                   <p>Bus Fare</p>
                   <p className="text-gray-500 text-sm">{`( ₹${seatPrice} *${selectedSeats.length} )`}</p>
                   <p className="font-bold">
-                    {" "}
                     Rs {seatPrice * selectedSeats.length}
                   </p>
                 </div>
@@ -233,7 +181,7 @@ function PassengerDetail() {
                 </div>
               </div>
               <button
-                disabled={isDisabled}
+                // disabled={isDisabled}
                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full${
                   isDisabled ? " cursor-not-allowed bg-blue-400" : ""
                 }`}
@@ -258,12 +206,14 @@ function PassengerDetail() {
               placeholder="Name"
               className="input-style p-2"
               onChange={(e) => handelPassengerFn(e)}
+              required
             />
             <select
               name="gender"
               id="gender"
               className="input-style p-2"
               onChange={(e) => handelPassengerFn(e)}
+              required
             >
               <option value="">Select Gender</option>
               <option value="male">Male</option>
@@ -271,25 +221,32 @@ function PassengerDetail() {
               <option value="other">Other</option>
             </select>
             <input
-              type="text"
+              type="number"
               name="age"
               placeholder="Age (in yrs)"
               className="input-style p-2"
+              min={12}
+              max={99}
               onChange={(e) => handelPassengerFn(e)}
+              required
             />
             <input
-              type="text"
+              type="email"
               name="email"
               placeholder="Email-id"
               className="input-style p-2"
               onChange={(e) => handelPassengerFn(e)}
+              required
             />
             <input
-              type="number"
+              type="tel"
               name="mobileNumber"
               placeholder="Mobile No"
               className="input-style p-2"
               onChange={(e) => handelPassengerFn(e)}
+              pattern="[0-9]{10}"
+              title="Please enter a valid 10-digit phone number"
+              required
             />
           </form>
         </div>

@@ -22,6 +22,10 @@
 - **Response:**
   - `success` (Boolean): Indicates if the request was successful.
   - `tripDetail` (Object): Details of the newly created trip.
+- **Error:**
+  - `success` (Boolean): Indicates if the request was unsuccessful (false).
+  - `message` (String):"Internal Error creating new trip".
+  - `detail` (String): "Error message details here".
 
 ### Get last 50 trips
 
@@ -31,6 +35,10 @@
   - `status` (Boolean): Indicates if the request was successful.
   - `total` (Number): Total number of trips fetched.
   - `allTrips` (Array of Objects): Details of the last 50 trips.
+- **Error:**
+  - `success` (Boolean): Indicates if the request was unsuccessful (false).
+  - `message` (String):"Internal Error creating new trip".
+  - `detail` (String): "Error message details here".
 
 ### Get trips by date
 
@@ -42,7 +50,10 @@
   - `status` (Boolean): Indicates if the request was successful.
   - `total` (Number): Total number of trips fetched.
   - `trip_Detail` (Array of Objects): Details of the trips filtered by date.
-
+- **Error:**
+  - `success` (Boolean): Indicates if the request was unsuccessful (false).
+  - `message` (String):"Internal Error creating new trip".
+  - `detail` (String): "Error message details here".
 ### Get trips by query parameters
 
 - **URL:** `/trip/getTripbyQuery`
@@ -53,7 +64,10 @@
   - `status` (Boolean): Indicates if the request was successful.
   - `total` (Number): Total number of trips fetched.
   - `trip_Detail` (Array of Objects): Details of the trips filtered by query parameters.
-
+- **Error:**
+  - `success` (Boolean): Indicates if the request was unsuccessful (false).
+  - `message` (String):"Internal Error creating new trip".
+  - `detail` (String): "Error message details here".
 ## Ticket Endpoints
 
 ### Create a new ticket
@@ -71,7 +85,10 @@
 - **Response:**
   - `success` (Boolean): Indicates if the request was successful.
   - `Ticket` (Object): Details of the newly created ticket.
-
+- **Error:**
+  - `success` (Boolean): Indicates if the request was unsuccessful (false).
+  - `message` (String):"Internal Error creating new trip".
+  - `detail` (String): "Error message details here".
 ### Get all tickets
 
 - **URL:** `/ticket/getTicket`
@@ -80,7 +97,10 @@
   - `success` (Boolean): Indicates if the request was successful.
   - `total` (Number): Total number of tickets.
   - `tickets` (Array of Objects): Details of all tickets.
-
+- **Error:**
+  - `success` (Boolean): Indicates if the request was unsuccessful (false).
+  - `message` (String):"Internal Error creating new trip".
+  - `detail` (String): "Error message details here".
 
 
 ### Server URL : https://redbus-eru5.onrender.com/
