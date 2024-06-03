@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { ToastContainer, toast } from "react-toastify";
+
 const SeatSelection = ({ selectBus, journeyTime }) => {
   const { from, to } = selectBus;
 
@@ -10,23 +12,11 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
   const totalSeats = selectBus.totalSeats;
   const [preBookedSeats, setPreBookedSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
-  // console.log("preBookedSeats", preBookedSeats);
-  // console.log("selectedSeats", selectedSeats);
 
   const handleSeatClick = (seatNumber) => {
-    // console.log(seatNumber);
     if (preBookedSeats.includes(seatNumber)) {
       return;
     }
-    // const seatIndex = selectedSeats.indexOf(seatNumber);
-    // if (seatIndex === -1) {
-    //   setSelectedSeats([...selectedSeats, seatNumber]);
-    // } else {
-    //   const updatedSeats = [...selectedSeats];
-    //   updatedSeats.splice(seatIndex, 1);
-    //   // setSelectedSeats(updatedSeats);
-    //   selectBus.seatBooked = [...selectedSeats];
-    // }
 
     setSelectedSeats((prevSelectedSeats) => {
       if (prevSelectedSeats.includes(seatNumber)) {
@@ -41,7 +31,7 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
     let seatColor = isSelected
       ? "bg-green-500 text-white hover:bg-green-400 "
       : "bg-gray-200 hover:bg-green-400 hover:text-white";
-    if (preBookedSeats.includes(number)) { 
+    if (preBookedSeats.includes(number)) {
       seatColor = "bg-red-500 text-white cursor-not-allowed";
     }
     return (
@@ -99,10 +89,11 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
       }
     };
 
-    fetchData(); 
-  }, [from,to,selectBus.name]);
+    fetchData();
+  }, [from, to, selectBus.name]);
   return (
     <div className="seatSelectionMainDiv m-auto p-5 ">
+      <ToastContainer />
       <h2 className="text-center text-2xl font-semibold mb-4">
         Select your seats
       </h2>
@@ -138,17 +129,21 @@ const SeatSelection = ({ selectBus, journeyTime }) => {
       {/* ///////////// */}
       <div className="mx-auto text-center mt-4">
         <button
-          disabled={!selectedSeats.length}
+          // disabled={!selectedSeats.length}
           className={`inline-block ${
             !selectedSeats.length
               ? "bg-green-200 cursor-not-allowed"
               : "bg-green-400 hover:bg-green-500"
           } focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 text-white px-8 py-4 rounded-lg transition duration-300 ease-in-out text-lg`}
-          onClick={() =>
+          onClick={() => {
+            if (!selectedSeats.length)
+              return toast.warn("Select At least One SeaT", {
+                pauseOnFocusLoss: false,
+              });
             navigate("/passengerDetail", {
               state: { selectBus, journeyTime, selectedSeats },
-            })
-          }
+            });
+          }}
         >
           Proceed to next Page
         </button>

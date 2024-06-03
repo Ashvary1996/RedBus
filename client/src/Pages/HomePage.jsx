@@ -10,7 +10,7 @@ import {
   setError,
   setStatus,
 } from "../redux/bookingSlice";
-
+import { ToastContainer, toast } from "react-toastify";
 const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const HomePage = () => {
         const cityAndState = res.data.data.flatMap((elem) =>
           elem.districts.map((district) => `${district}, ${elem.state}`)
         );
-  
+
         dispatch(setCities(cityAndState.sort()));
       } catch (error) {
         console.error("Error fetching cities:", error.message);
@@ -34,18 +34,19 @@ const HomePage = () => {
     };
     fetchCities();
   }, [dispatch]);
- 
- 
 
   const handleSearch = () => {
     if (from && to && date) {
       dispatch(setStatus("loading"));
       navigate("/busAndSeatpage", { state: { from, to, date } });
+    } else {
+      toast.warn("Select All Field", { pauseOnFocusLoss: false });
     }
   };
 
   return (
     <div className="flex justify-center pt-10 min-h-screen bg-gray-100">
+      <ToastContainer />
       <div className="container mx-auto px-4 w-full md:w-3/4">
         <h1 className="text-4xl text-center mb-8 text-red-600 font-extrabold">
           Book Your Trip
@@ -113,7 +114,7 @@ const HomePage = () => {
               : "hover:bg-orange-600"
           }`}
           onClick={handleSearch}
-          disabled={!from || !to || !date}
+          // disabled={!from || !to || !date}
         >
           Search
         </button>

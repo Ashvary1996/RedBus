@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
+import { ToastContainer, toast } from "react-toastify";
 
 function PassengerDetail() {
   const location = useLocation();
@@ -43,10 +44,9 @@ function PassengerDetail() {
 
   const handelPaymentFn = async () => {
     if (isDisabled) {
-      alert(
-        "Please fill out all the required fields before proceeding to payment."
-      );
-      return;
+      return toast.warn("Please fill all the Traveller Details. ", {
+        pauseOnFocusLoss: false,
+      });
     }
     const stripe = await loadStripe(process.env.REACT_APP_STRIP_KEY);
     const body = {
@@ -127,6 +127,7 @@ function PassengerDetail() {
             "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
         }}
       >
+        <ToastContainer />
         <div className="flex flex-col md:flex-row justify-between items-center px-6 py-4">
           <div className="w-full md:w-2/3 md:mr-4 mb-4 md:mb-0">
             <h1 className="text-lg font-bold mb-2">

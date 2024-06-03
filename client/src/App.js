@@ -1,4 +1,5 @@
 import "./App.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import BusAndSeatSelectionPage from "./Pages/BusAndSeatSelectionPage";
@@ -7,7 +8,6 @@ import Footer from "./components/Footer";
 import PassengerDetail from "./Pages/PassengerDetail";
 import PaymentSuccess from "./Pages/PaymentSuccess";
 import Ticket from "./Pages/Ticket";
-
 import PaymentCancel from "./Pages/PaymentCancel";
 import SeatSelection from "./components/SeatSelection";
 function App() {
