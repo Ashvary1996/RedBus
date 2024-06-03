@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import SeatSelection from "../components/SeatSelection";
-import { ToastContainer, toast } from "react-toastify";
 
 const BusAndSeatSelectionPage = () => {
   const location = useLocation();
@@ -208,7 +207,6 @@ const BusAndSeatSelectionPage = () => {
   // console.log("selectBus", selectBus);
   return (
     <div className="busPageSelection ">
-      <ToastContainer />
       <div className="mainDiv sm:flex sm:flex-row  ">
         {/* Filter  */}
         {/* /////////////////////////// Filter Div Started    ///////////////////////////////////// */}
