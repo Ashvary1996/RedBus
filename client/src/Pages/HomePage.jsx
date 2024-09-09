@@ -15,6 +15,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cities, from, to, date } = useSelector((state) => state.booking);
+  console.log(date);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -65,7 +66,7 @@ const HomePage = () => {
             >
               <option value="">Select City, And State</option>
               {cities.map((elem, i) => (
-                <option key={i} value={elem}>
+                <option disabled={to == elem} key={i} value={elem}>
                   {elem}
                 </option>
               ))}
@@ -85,7 +86,7 @@ const HomePage = () => {
             >
               <option value="">Select City, And State</option>
               {cities.map((elem, i) => (
-                <option key={i} value={elem}>
+                <option disabled={from == elem} key={i} value={elem}>
                   {elem}
                 </option>
               ))}
@@ -98,10 +99,13 @@ const HomePage = () => {
             </label>
             <input
               type="date"
+              min={new Date().toISOString().split("T")[0]}
               id="dateInput"
               name="dateInput"
               value={date}
-              onChange={(e) => dispatch(setDate(e.target.value))}
+              onChange={(e) => {
+                dispatch(setDate(e.target.value));
+              }}
               className="cursor-pointer w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             />
           </div>
