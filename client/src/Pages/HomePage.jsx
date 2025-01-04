@@ -66,7 +66,7 @@ const HomePage = () => {
             >
               <option value="">Select City, And State</option>
               {cities.map((elem, i) => (
-                <option disabled={to == elem} key={i} value={elem}>
+                <option disabled={to === elem} key={i} value={elem}>
                   {elem}
                 </option>
               ))}
@@ -86,7 +86,7 @@ const HomePage = () => {
             >
               <option value="">Select City, And State</option>
               {cities.map((elem, i) => (
-                <option disabled={from == elem} key={i} value={elem}>
+                <option disabled={from === elem} key={i} value={elem}>
                   {elem}
                 </option>
               ))}
